@@ -1,0 +1,58 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+          #路由id，可以随意写
+        - id: user-service-route
+          #代理的服务地址
+          #uri: http://127.0.0.1:9001
+          uri: lb://user-service
+          predicates:
+              #路由断言，可以配置映射路径
+            - Path=/api/user/**
+          filters:
+            #表示过滤1个路径，2表示过滤两个路径，以此类推
+            - StripPrefix=1
+            #添加请求路径的前缀
+            #- PrefixPath=/user
+
+            - MyParam=name
+      default-filters:
+        - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+        - AddResponseHeader=My-Name, yemage
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            #allowedOrigins: * # 这种写法或者下面的都可以，*表示全部
+            allowedOrigins:
+              - "http://docs.spring.io"
+            allowedMethods:
+              - GET
+
+#http://localhost:10010/user/7 ->  http://localhost:9001/user/7
+#http://localhost:10010/7 ->  http://localhost:9001/user/7
+#http://localhost:10010/api/user/7  ->  http://localhost:9001/user/7
+eureka:
+  client:
+    service-url:
+      defaultZone: HTTP://127.0.0.1:10086/eureka
+    instance:
+      prefer-ip-address: true
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000 #服务降级超时时间，默认1S
+ribbon:
+  ConnectTimeout: 1000 # 连接超时时长
+  ReadTimeout: 2000 # 数据通信超时时长
+  MaxAutoRetries: 0 # 当前服务器的重试次数
+  MaxAutoRetriesNextServer: 0 # 重试多少次服务

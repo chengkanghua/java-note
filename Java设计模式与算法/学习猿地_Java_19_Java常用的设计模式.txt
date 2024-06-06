@@ -1,0 +1,114 @@
+1.编程题
+  使用基于tcp协议的编程模型实现客户端向服务器发送"hello"，服务器接收到数据内容后打印即可。
+
+作业：
+-----------------------------------------------------------------------------
+今天内容：
+   (1)常用的设计原则
+   (2)常用的设计模式
+   (3)常用的查找算法
+   (4)常用的排序算法
+
+1.常用的设计原则(记住)
+1.1 软件开发的流程
+   需求分析文档 => 概要设计文档 => 详细设计文档 => 编码和测试 => 安装和调试
+=> 维护和升级
+
+1.2 常用的设计原则
+   开闭原则 - 对扩展开放，对修改关闭。
+            - 提高了代码的扩展性和维护性。
+如：
+   public class Person {
+      private String name;
+      private int age;
+      ...
+   }
+   public class SubPerson extends Person {
+
+      private boolean gender;
+      ... 
+   }
+ 
+   里氏代换原则 - 任何父类可以出现的地方，子类一定可以出现。
+                - 子类 is a 父类。
+                - 在以后的开发中多使用继承和多态的理念。
+如：
+   public static void draw(Shape s){
+       s.show();
+   }
+   ShapeTest.draw(new Rect(1, 2, 3, 4));
+   ShapeTest.draw(new Circle(5, 6, 7));
+
+   依赖倒转原则 - 尽量多依赖于抽象类和接口，而不是具体实现类。
+                - 在以后的开发中多使用抽象类和接口，对子类具有强制性和规范性
+如：
+   public abstract class Account {
+       public abstract double getLixi();
+   } 
+   public class FixedAccount extends Account {
+       @Override
+       public double getLixi(){}
+   }
+
+   接口隔离原则 - 尽量依赖于小接口而不是大接口，避免接口的污染。
+                - 可以降低耦合度。
+                - 耦合主要指一个模块与其它模块之间的关联度。
+如：
+   public interface RunAnimal {
+       public abstract void run(); // 描述奔跑的行为
+   }
+   public interface FlyAnimal {
+       public abstract void fly(); // 描述飞行的行为
+   }
+   public class Dog implements RunAnimal {
+       public void run(){ ... }
+   }
+
+   迪米特法则(最少知道原则) - 一个实体应当尽量少于其它实体之间发生相互作用。
+       - 低耦合，高内聚
+       - 高内聚就是指将一个实体应当将该实体应该拥有的功能尽量聚集在该实体内部
+   
+   合成复用原则 - 尽量多使用合成的方式，而不是继承的方式。
+如：
+   public class A {
+       public void show() { ... }
+       ... ...
+   }
+
+   //public class B extends A{  不推荐
+   public class B {
+       private A a;
+
+       public void test() {
+           // 调用show方法
+           a.show();
+       }
+   }
+
+2.常用的设计模式(重点)
+2.1 基本概念
+   设计模式就是一种用于固定场合的固定套路，是多年编程经验的总结。
+
+2.2 常用的设计模式
+   单例设计模式、模板设计模式、工厂方法模式、抽象工厂模式。
+
+3.常用的查找算法(重中之重)
+3.1 线性/顺序查找算法
+
+3.2 二分/折半查找算法
+
+4.常用的排序算法(重中之重)
+4.1 冒泡排序算法
+      
+作业：
+   1.重点掌握查找算法和排序算法。
+   2.复习和总结JavaSE的所有内容。   
+
+
+
+
+
+
+
+
+

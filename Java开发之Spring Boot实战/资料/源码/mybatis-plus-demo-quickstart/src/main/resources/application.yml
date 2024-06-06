@@ -1,0 +1,18 @@
+#h2数据库脚本
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: root
+    password: test
+    schema: classpath:db/schema-h2.sql
+    data: classpath:db/data-h2.sql
+
+#日志
+logging:
+  level:
+    com.yemage: debug
+# 配置mybatis plus
+mybatis-plus:
+  type-aliases-package: com.yemage.entity #别名搜索
+  mapper-locations: classpath:/mappers/*.xml #加载映射文件

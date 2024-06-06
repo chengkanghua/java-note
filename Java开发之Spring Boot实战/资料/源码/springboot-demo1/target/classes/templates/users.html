@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style type="text/css">
+        table {border-collapse: collapse; font-size: 14px; width: 80%; margin: auto}
+        table, th, td {border: 1px solid darkslategray;padding: 10px}
+    </style>
+</head>
+<body>
+<div style="text-align: center">
+    <span style="color: darkslategray; font-size: 30px">欢迎光临！哈哈哈</span>
+    <hr/>
+    <table class="list">
+        <tr>
+            <th>序号</th>
+            <th>id</th>
+            <th>姓名</th>
+            <th>用户名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>生日</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="user,status : ${users}" th:object="${user}" th:bgcolor="${status.even} ? 'gray'">
+            <th th:text="${status.even}">1</th>
+            <td th:text="*{id}">123</td>
+            <td th:text="*{name}">张三</td>
+            <td th:text="*{userName}">zhangsan</td>
+            <td th:text="${user.age}">20</td>
+            <td th:text="${user.sex} == 1 ? '男' :'女'">男</td>
+            <td th:text="${#dates.format(user.birthday,'yyyy-MM-dd')}">1980-02-29</td>
+            <td th:text="${user.note}">1</td>
+            <td>
+                <a th:href="@{/delete(id=*{id},userName=*{userName})}">删除</a>
+                <a th:href="|/update/*{id}|">修改</a>
+                <a th:href="'/approve/' + *{id}">审核</a>
+            </td>
+
+        </tr>
+    </table>
+</div>
+<h5>if指令</h5>
+<a th:if="${users.size() > 0}">查询结果存在</a><br>
+<a th:if="${users.size() <= 0}">查询结果不存在</a><br>
+<a th:unless="${session.user != null}" href="#">登录</a><br>
+
+<h5>内联文本</h5>
+<div>
+    <h6 th:inline="text">[[${text}]]</h6>
+    <h6 th:inline="none">[[${text}]]</h6>
+    <h6>[[${text}]]</h6>
+</div>
+
+<h5>内联js</h5>
+<script th:inline="none">
+    /*<![CDATA[*/
+    var text = '[[${text}]]';
+    console.log(text);
+    /*]]>*/
+</script>
+
+<h5>内置变量</h5>
+<h6 th:text="${#dates.createNow()}">获取当前日期</h6>
+<h6 th:text="${#strings.substring(text, 6, 9)}">截取字符串</h6>
+<h6 th:text="${#strings.length(text)}">获得长度</h6>
+<h6 th:text="${#strings.randomAlphanumeric(6)}">随机字符串</h6>
+<h6 th:text="${#strings.equals(text, 'hello text....')}"></h6>
+
+<h5>thymeleaf布局</h5>
+<div th:insert="footer :: copy('野马哥1')"></div>
+<div th:replace="footer :: copy('野马哥2')"></div>
+<div th:include="footer :: copy('野马哥3')"></div>
+</body>
+</html>

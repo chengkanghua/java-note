@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis全局配置文件：节点的顺序参考：按住ctrl+configuration节点，进入文件观看-->
+<configuration>
+    <properties resource="jdbc.properties"/>
+
+    <settings>
+        <!--配置日志-->
+        <setting name="logImpl" value="LOG4J"/>
+        <!--是否开启二级缓存，默认false-不开启, true：开启-->
+       <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <!--设置别名-->
+    <typeAliases>
+        <!--<typeAlias type="com.lina.pojo.Team" alias="Team"></typeAlias>-->
+        <package name="com.lina.pojo"/>
+        <package name="com.lina.mapper"/>
+    </typeAliases>
+    <!--配置分页插件-->
+    <plugins>
+        <!--5.0版本之前使用的PageHelper,5.0之后使用PageInterceptor-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--<property name="reasonable" value="true"/>-->
+        </plugin>
+    </plugins>
+    <!--配置mybatis的环境-->
+    <environments default="development">
+        <!--id：数据源名称-->
+        <environment id="development">
+            <!--事务的类型：JDBC 使用Connection 对象的提交和回滚的方法-->
+            <transactionManager type="JDBC"/>
+            <!--创建数据源：POOLED方式 使用连接池-->
+            <dataSource type="POOLED">
+                <!--创建数据源必备4大参数-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--在配置文件中注册映射文件-->
+    <mappers>
+        <!--<mapper resource="com/lina/pojo/Team.xml"/>
+        <mapper resource="com/lina/mapper/TeamMapper.xml"/>
+        <mapper resource="com/lina/mapper/GameRecordMapper.xml"/>
+        <mapper resource="com/lina/mapper/UsersMapper.xml"/>-->
+
+        <!--<mapper class="com.lina.pojo.Team"/>
+        <mapper class="com.lina.mapper.TeamMapper"/>
+        <mapper class="com.lina.mapper.GameRecordMapper"/>
+        <mapper class="com.lina.mapper.UsersMapper"/>-->
+
+        <package name="com.lina.dao"/>
+        <package name="com.lina.pojo"/>
+        <package name="com.lina.mapper"/>
+        <package name="org.lina.pojo"/>
+        <package name="org.lina.mapper"/>
+    </mappers>
+</configuration>

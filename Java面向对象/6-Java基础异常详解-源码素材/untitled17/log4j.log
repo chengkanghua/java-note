@@ -1,0 +1,4 @@
+
+ WARN [main] - warn级别信息
+ERROR [main] - error级别信息
+FATAL [main] - fatal级别信息

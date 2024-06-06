@@ -1,0 +1,18 @@
+#端口号
+server:
+  port: ${port:10086}
+spring:
+  application:
+    name: eureka-server
+eureka:
+  client:
+    service-url:
+      #eureka服务的地址：如果做集群，需要指定其他eureka地址
+      defaultZone: http://127.0.0.1:10086/eureka
+    #不注册自己
+    register-with-eureka: false
+    #不拉取服务
+    fetch-registry: false
+  server:
+    enable-self-preservation: false #关闭自我保护模式（缺省为打开）
+    delta-retention-timer-interval-in-ms: 10000 #服务失效剔除间隔时间，默认60秒

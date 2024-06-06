@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--映射文件：实体类与数据库表的映射  ORM思想 object relation mapping
+        SQL语句从代码的硬编码中抽取出来了
+    -->
+<!--namespace=“完全限定名，实体类的完全限定名”-->
+<mapper namespace="com.lina.pojo.Team">
+
+    <delete id="del" >
+        delete from team where teamId=#{id}
+    </delete>
+
+    <update id="update" parameterType="com.lina.pojo.Team">
+        update team set teamName=#{teamName},location=#{location}
+        where teamId=#{teamId}
+    </update>
+
+    <!--添加一个球队
+    parameterType="com.lina.pojo.Team" 将对象作为参数，
+    #{值} 值必须是实体类中的属性名称，其实就是占位符？
+    -->
+    <insert id="add" parameterType="com.lina.pojo.Team" >
+        INSERT INTO `team` (`teamName`, `location`, `createTime`)
+        VALUES (#{teamName}, #{location}, #{createTime})
+    </insert>
+
+    <!--id：自定义的名，不能重复；相当于原来的dao中的方法名称
+        resultType="返回的类型，如果是集合的时候，写的是集合中的元素的类型"；使用要求：实体类中的属性和表中的列名一致
+     -->
+    <select id="queryAll" resultType="com.lina.pojo.Team">
+        select * from team;
+    </select>
+
+    <!--parameterType:表示参数的类型，参数唯一的时候才使用该属性；可以省略的，框架可以自己判定类型
+        #{自定义的参数名称} 名称没有实际意义
+      -->
+    <select id="queryById" parameterType="java.lang.Integer" resultType="com.lina.pojo.Team">
+        select * from team where teamId=#{id}
+    </select>
+</mapper>

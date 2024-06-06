@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--spring的配置文件：
+    1：beans：根标签，spring中java对象都是bean
+    2、spring-beans.xsd 约束文件（约束xml文件中都能写什么内容）
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--创建的对象：
+            声明一个bean。通知spring要创建那个类的对象
+            一个bean标签来声明一个对象：
+                    id="自定义对象的名称“ 要求唯一
+                    class="类的完全限定名"  包名+类名  spring底层是通过反射机制创建对象
+                    scope="单例/多例“
+                        singleton:单例，默认值：容器启动的时候单例对象就会被创建，整个容器中只有一个对象
+                        prototype：多例，什么时候使用对象什么时候创建对象，每次都创建新的对象
+                    lazy-init="true/false"  是否延迟创建对象，只是针对单例有效
+                        true:
+                        false:默认值
+              相当于Team team=new Team();创建好的对象放入了spring和集合map Spring.map("team",new Team())-->
+    <bean id="team" class="com.lina.pojo.Team" scope="singleton" lazy-init="false" init-method="init" destroy-method="destroy"></bean>
+    <bean id="team2" class="com.lina.pojo.Team" scope="prototype"></bean>
+
+
+    <!--创建非自定义的对象-->
+    <!--<bean id="date" class="java.util.Date"></bean>-->
+</beans>

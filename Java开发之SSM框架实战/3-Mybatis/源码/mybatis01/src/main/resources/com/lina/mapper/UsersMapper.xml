@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lina.mapper.UsersMapper">
+    <cache-ref namespace="com.lina.mapper.TeamMapper"/>
+    <!--方式1：resultType中的实体类的属性作为查询语句中的别名，让别名和属性保持一致-->
+    <select id="queryById" resultType="com.lina.pojo.Users">
+        select user_id as userId,user_name as userName,user_age as userAge from users where user_id=#{id};
+    </select>
+    <!--方式2：通过resultMap自行映射-->
+    <select id="queryById2" resultMap="baseMap">
+        select * from users where user_id=#{id};
+    </select>
+    <resultMap id="baseMap" type="com.lina.pojo.Users">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_age" property="userAge"/>
+    </resultMap>
+</mapper>

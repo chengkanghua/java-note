@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="teamDao" class="com.lina.dao.TeamDao"></bean>
+    <!--<bean id="teamDao1" class="com.lina.dao.TeamDao"></bean>-->
+    <bean id="teamService" class="com.lina.service.TeamService">
+        <!--1、使用set方法注入属性值-->
+        <property name="teamDao" ref="teamDao"></property>
+    </bean>
+
+    <bean id="teamService2" class="com.lina.service.TeamService">
+        <!--2、使用构造方法注入属性值-->
+        <constructor-arg name="teamDao" ref="teamDao"/>
+    </bean>
+
+    <!--自动注入：按名称自动注入 查找容器中id名称与属性名一致的对象进行注入-->
+    <bean id="teamService3" class="com.lina.service.TeamService" autowire="byName">
+    </bean>
+    <!--自动注入：按类型自动注入 查找容器中类型属性一致的或者符合is-a关系的对象进行注入；符合要求的对象必须唯一，否则报错-->
+    <bean id="teamService4" class="com.lina.service.TeamService" autowire="byType">
+    </bean>
+</beans>

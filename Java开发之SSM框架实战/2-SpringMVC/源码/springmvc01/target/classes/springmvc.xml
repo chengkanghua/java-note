@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+">
+
+    <!--springmvc的配置文件：控制器的bean对象都在这里扫描-->
+    <context:component-scan base-package="com.lina.controller,com.lina.exceptions"/>
+
+    <!--视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <mvc:annotation-driven/>
+
+    <!--静态资源处理方式1：-->
+    <!--<mvc:default-servlet-handler/>-->
+    <!--方式2：
+    location:静态资源所在的路径
+    mapping:表示对该资源的请求-->
+    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--配置拦截器的拦截路径-->
+            <mvc:mapping path="/**"/>
+            <!--配置干活的拦截器-->
+            <bean  class="com.lina.interceptor.MyInterceptor2"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <!--配置拦截器的拦截路径-->
+            <mvc:mapping path="/**"/>
+            <!--配置干活的拦截器-->
+            <bean  class="com.lina.interceptor.MyInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <!--配置拦截器的拦截路径-->
+            <mvc:mapping path="/**"/>
+            <!--配置干活的拦截器-->
+            <bean  class="com.lina.interceptor.FileInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!--文件上传的配置-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--限定文件上传的大小 一字节为单位B  1024B=1Kb   1024KB=1M  -->
+        <!--<property name="maxUploadSize" value="512000"/>-->
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
+</beans>

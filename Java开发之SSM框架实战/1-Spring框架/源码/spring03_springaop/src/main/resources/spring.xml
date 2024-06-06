@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+    <!--包扫描-->
+    <context:component-scan base-package="com.lina.service,com.lina.aop"/>
+    <!--开启注解AOP的使用-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!--aop:aspectj-autoproxy的底层是由AnnotationAwareAspectJAutoProxyCreator实现的，
+    是基于AspectJ的注解适配自动代理生成器。通过注解扫描找到@Aspect 定义的切面类，在由切面类根据切入点找到目标类的目标方法，再由通知类型找到切入的时间
+    -->
+
+    <aop:config>
+        <aop:pointcut id="pt1" expression="execution(* com.lina.service..*.add*(..))"/>
+        <aop:pointcut id="pt11" expression="execution(* com.lina.service..*.insert*(..))"/>
+        <aop:pointcut id="pt2" expression="execution(* com.lina.service..*.update*(..))"/>
+        <aop:pointcut id="pt22" expression="execution(* com.lina.service..*.modify*(..))"/>
+        <aop:pointcut id="pt3" expression="execution(* com.lina.service..*.del*(..))"/>
+        <aop:pointcut id="pt33" expression="execution(* com.lina.service..*.delete*(..))"/>
+
+        <aop:aspect ref="myAOP">
+            <aop:before method="before" pointcut="execution(* com.lina.service..*.add*(..))"></aop:before>
+            <aop:after-returning method="afterReturn" pointcut-ref="pt2" returning="result"></aop:after-returning>
+            <aop:after-throwing method="exception" pointcut-ref="pt3" throwing="ex"/>
+            <aop:after method="myfinally" pointcut-ref="pt1"></aop:after>
+            <aop:around method="around" pointcut-ref="pt3"/>
+         </aop:aspect>
+    </aop:config>
+</beans>

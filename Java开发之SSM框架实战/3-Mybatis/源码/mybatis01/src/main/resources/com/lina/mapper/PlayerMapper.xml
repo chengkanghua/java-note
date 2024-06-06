@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lina.mapper.PlayerMapper">
+
+
+    <select id="queryByTeamId" resultMap="baseResultMap">
+        select * from player where teamId=#{id}
+    </select>
+    <select id="queryById" resultMap="baseResultMap">
+        select * from player where playerId=#{id}
+    </select>
+    <resultMap id="baseResultMap" type="Player">
+        <id column="playerId" property="playerId"/>
+        <result column="playerName" property="playerName"/>
+        <result column="playerNum" property="playerNum"/>
+        <result column="teamId" property="teamId"/>
+    </resultMap>
+
+    <!--方式1： 通过对象打点属性直接映射列名
+        要求：必须连接查询
+             一般会自定义结果映射-->
+    <select id="queryById1" resultMap="joinTeamResult1">
+        SELECT * FROM `player` p INNER JOIN team t
+        on t.teamId=p.teamId
+         where playerid=#{id}
+    </select>
+    <resultMap id="joinTeamResult1" type="Player" extends="baseResultMap">
+        <result column="teamId" property="team1.teamId"></result>
+        <result column="teamName" property="team1.teamName"></result>
+        <result column="location" property="team1.location"></result>
+        <result column="createTime" property="team1.createTime"></result>
+    </resultMap>
+
+    <!--方式2：直接引用关联对象的Mapper映射
+    要求：必须连接查询-->
+    <select id="queryById2" resultMap="joinTeamResult2">
+        SELECT * FROM `player` p INNER JOIN team t
+        on t.teamId=p.teamId
+         where playerid=#{id}
+    </select>
+    <resultMap id="joinTeamResult2" type="Player" extends="baseResultMap">
+        <association property="team2" javaType="Team"
+                     resultMap="com.lina.mapper.TeamMapper.baseResultMap"/>
+    </resultMap>
+    <!--方式3：使用关联对象的单独的查询语句
+    要求：不需要连接查询
+        需要关联对象中存在对应的查询语句-->
+    <select id="queryById3" resultMap="joinTeamResult3">
+        select * from player where playerId=#{id}
+    </select>
+    <resultMap id="joinTeamResult3" type="Player" extends="baseResultMap">
+            <association property="team3" javaType="Team"
+                         select="com.lina.mapper.TeamMapper.queryById" column="teamId"/>
+    </resultMap>
+
+
+
+
+    </mapper>

@@ -1,0 +1,28 @@
+DELETE FROM user2;
+
+INSERT INTO user2 (id, name, age, email) VALUES
+(1, 'Jone', 18, 'test1@baomidou.com'),
+(2, 'Jack', 20, 'test2@baomidou.com'),
+(3, 'Tom', 28, 'test3@baomidou.com'),
+(4, 'Sandy', 21, 'test4@baomidou.com'),
+(5, 'yemage1', 331, 'yemage@qq.com'),
+(6, 'yemage2', 331, 'yemage@qq.com'),
+(7, 'yemage3', 331, 'test4@baomidou.com'),
+(8, 'yemage4', 331, 'test4@baomidou.com'),
+(9, 'yemage5', 331, 'test4@baomidou.com'),
+(10, 'yemage6', 331, 'test4@baomidou.com'),
+(11, 'yemage7', 331, 'test4@baomidou.com'),
+(12, 'yemage8', 331, 'test4@baomidou.com'),
+(13, 'yemage9', 331, 'test4@baomidou.com'),
+(14, 'yemage10', 331, 'test4@baomidou.com'),
+(15, 'yemage11', 331, 'test4@baomidou.com'),
+(16, 'yemage12', 331, 'test4@baomidou.com'),
+(17, 'yemage13', 331, 'test4@baomidou.com'),
+(18, 'yemage14', 331, 'test4@baomidou.com'),
+(19, 'yemage15', 331, 'test4@baomidou.com'),
+(20, 'yemage16', 331, 'test4@baomidou.com'),
+(21, 'yemage17', 331, 'test4@baomidou.com'),
+(22, 'yemage18', 331, 'test4@baomidou.com'),
+(23, 'yemage19', 331, 'test4@baomidou.com'),
+(24, 'yemage20', 331, 'test4@baomidou.com'),
+(25, 'yemage21', 24, 'test5@baomidou.com');
